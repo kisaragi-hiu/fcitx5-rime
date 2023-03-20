@@ -1,1 +1,1 @@
-fcitx5_install_translation(fcitx5-rime)
+fcitx5_install_translation(fcitx5-{{{lowername}}})
