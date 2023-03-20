@@ -1,0 +1,7 @@
+[InputMethod]
+Name={{{name}}}
+Icon=fcitx-{{{lowername}}}
+Label={{{label}}}
+LangCode={{{langcode}}}
+Addon={{{lowername}}}
+Configurable=True

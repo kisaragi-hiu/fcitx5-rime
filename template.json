@@ -1,0 +1,12 @@
+{
+  "name": "AltRime",
+  "summary": "AltRime input method",
+  "homepage": "https://github.com/kisaragi-hiu/fcitx5-rime",
+  "bugtracker": "https://github.com/kisaragi-hiu/fcitx5-rime/issues",
+  "gettext-domain": "fcitx5-altrime",
+  "projectid": "fcitx5-altrime",
+  "langcode": "nan",
+  "label": "台",
+  "lowername": "altrime",
+  "uppername": "ALTRIME"
+}
