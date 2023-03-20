@@ -1,0 +1,24 @@
+# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Contributor: csslayer <wengxt AT gmail com>
+
+pkgname=fcitx5-{{{lowername}}}
+pkgver=5.0.16
+pkgrel=1
+pkgdesc="{{{uppername}}} support for Fcitx5"
+arch=('x86_64')
+url="{{{homepage}}}"
+license=('GPL')
+depends=('fcitx5' 'librime')
+makedepends=('extra-cmake-modules' 'ninja')
+
+build() {
+    cd ..
+
+    cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib .
+    ninja
+}
+
+package() {
+    cd ..
+    DESTDIR="$pkgdir" ninja install
+}
