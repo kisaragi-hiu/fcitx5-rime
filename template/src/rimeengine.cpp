@@ -287,7 +287,8 @@ void RimeEngine::updateConfig() {
 #endif
 
     rimeStart(false);
-    instance_->inputContextManager().registerProperty("rimeState", &factory_);
+    instance_->inputContextManager().registerProperty("{{{lowername}}}State",
+                                                      &factory_);
     updateSchemaMenu();
 }
 void RimeEngine::activate(const InputMethodEntry &, InputContextEvent &event) {
