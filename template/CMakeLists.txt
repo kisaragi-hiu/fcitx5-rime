@@ -21,11 +21,12 @@ find_package(Fcitx5Module REQUIRED COMPONENTS Notifications DBus)
 # pkg_check_modules(Rime REQUIRED IMPORTED_TARGET "rime>=1.0.0")
 include(FetchContent)
 FetchContent_Declare(rime
-  GIT_REPOSITORY https://github.com/rime/librime.git
-  GIT_TAG 08dd95f5d9282346f0d4a3e8fc6b20811dc3d063 # 1.8.5
+  GIT_REPOSITORY https://github.com/kisaragi-hiu/librime.git
+  GIT_TAG 9eefd6d69ee2099586c26b0e3a6bd88998feec2b
 )
-FetchContent_Populate(rime)
+# FetchContent_MakeAvailable(rime)
 # Using FetchContent_Declare together with CMAKE_ARGS
+FetchContent_Populate(rime)
 # https://stackoverflow.com/questions/62101576/
 set(BUILD_STATIC ON CACHE INTERNAL "Build static")
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "Don't build shared")
