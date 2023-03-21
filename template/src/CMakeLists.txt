@@ -5,7 +5,12 @@ set(RIME_SOURCES
     rimeservice.cpp
 )
 add_library({{{lowername}}} MODULE ${RIME_SOURCES})
-target_link_libraries({{{lowername}}} Fcitx5::Core Fcitx5::Config PkgConfig::Rime Fcitx5::Module::Notifications Fcitx5::Module::DBus)
+target_link_libraries({{{lowername}}}
+  Fcitx5::Core
+  Fcitx5::Config
+  rime
+  Fcitx5::Module::Notifications
+  Fcitx5::Module::DBus)
 set_target_properties({{{lowername}}} PROPERTIES PREFIX "")
 install(TARGETS {{{lowername}}} DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file({{{lowername}}}.conf.in {{{lowername}}}.conf)
