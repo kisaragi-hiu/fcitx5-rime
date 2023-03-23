@@ -15,38 +15,48 @@ If KEY is nil, return the whole data instead."
         (gethash key data)
       data)))
 
-(defun t:prepare-directory ()
-  "Create the directory."
-  (when (file-directory-p "rebranded")
-    (shell-command-to-string "rm -rf rebranded"))
-  (make-directory "rebranded" t))
+(defun t:dir-to-target (dir)
+  "Return output directory for DIR."
+  (format "rebranded-%s" dir))
+
+(defun t:prepare-directory (dir)
+  "Create the target directory for DIR."
+  (let ((target (t:dir-to-target dir)))
+    (when (file-directory-p target)
+      (shell-command-to-string (format "rm -rf %s" target)))
+    (make-directory target t)))
 
 (defun t:prepare-files (dir)
-  "Copy the files over from DIR and apply the placeholders."
-  (dolist (path (directory-files-recursively dir "."))
-    (let ((newpath
-           (thread-last
-             path
-             (replace-regexp-in-string (format "\\`%s" dir) "rebranded")
-             (replace-regexp-in-string
-              "{{{\\([^{}]+\\)}}}"
-              (lambda (str)
-                (or (t:get (match-string 1 str))
-                    (error "%s: %s is not a valid key" path (match-string 1))))))))
-      (make-directory (file-name-directory newpath)
-                      t)
-      (copy-file path newpath t)
-      (with-temp-file newpath
-        (insert-file-contents newpath)
-        (goto-char (point-min))
-        (while (re-search-forward "{{{\\([^{}]+\\)}}}" nil t)
-          (replace-match
-           (or (t:get (match-string 1))
-               (error "%s: %s is not a valid key" path (match-string 1)))))))))
+  "Copy the files over from DIR and apply the placeholders.
+DIR must have no spaces in it and should just be a directory name."
+  (let ((target (t:dir-to-target dir)))
+    (dolist (path (seq-remove
+                   (lambda (x) (string-match-p "/\\." x))
+                   (directory-files-recursively dir ".")))
+      (let ((newpath
+             (thread-last
+               path
+               (replace-regexp-in-string (format "\\`%s" dir) target)
+               (replace-regexp-in-string
+                "{{{\\([^{}]+\\)}}}"
+                (lambda (str)
+                  (or (t:get (match-string 1 str))
+                      (error "%s: %s is not a valid key" path (match-string 1))))))))
+        (make-directory (file-name-directory newpath)
+                        t)
+        (copy-file path newpath t)
+        (with-temp-file newpath
+          (insert-file-contents newpath)
+          (goto-char (point-min))
+          (while (re-search-forward "{{{\\([^{}]+\\)}}}" nil t)
+            (replace-match
+             (or (t:get (match-string 1))
+                 (error "%s: %s is not a valid key" path (match-string 1))))))))))
 
-(t:prepare-directory)
-(t:prepare-files (or (car argv)
-                     "template"))
+(let ((dir (or (car argv)
+               "template")))
+  (t:prepare-directory dir)
+  (t:prepare-files dir))
 
 ;; Local Variables:
 ;; mode: lisp-interaction
