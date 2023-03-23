@@ -8,7 +8,7 @@ pkgdesc="{{{uppername}}} support for Fcitx5"
 arch=('x86_64')
 url="{{{homepage}}}"
 license=('GPL')
-depends=('fcitx5' 'librime')
+depends=('fcitx5')
 makedepends=('extra-cmake-modules' 'ninja')
 
 build() {
@@ -24,6 +24,6 @@ package() {
     cd "$pkgdir"
     rm -r usr/include
     rm -r usr/lib/pkgconfig
-    rm -r usr/lib/librime.a
     rm -r usr/share/cmake
+    rm -r usr/bin
 }

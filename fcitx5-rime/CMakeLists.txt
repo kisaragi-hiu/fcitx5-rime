@@ -13,24 +13,16 @@ find_package(Gettext REQUIRED)
 find_package(Fcitx5Core 5.0.6 REQUIRED)
 find_package(Fcitx5Module REQUIRED COMPONENTS Notifications DBus)
 # find_package(PkgConfig REQUIRED)
-
-# set(CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_STATIC_LIBRARY_PREFIX}")
-# set(CMAKE_FIND_LIBRARY_SUFFIXES "${CMAKE_STATIC_LIBRARY_SUFFIX}")
-# list(APPEND PKG_CONFIG_EXECUTABLE "--static")
-
 # pkg_check_modules(Rime REQUIRED IMPORTED_TARGET "rime>=1.0.0")
+
 include(FetchContent)
-FetchContent_Declare(rime
-  GIT_REPOSITORY https://github.com/kisaragi-hiu/librime.git
-  GIT_TAG 9eefd6d69ee2099586c26b0e3a6bd88998feec2b
+FetchContent_Declare({{{lowername}}}
+  SOURCE_DIR "../rebranded-librime"
 )
-# FetchContent_MakeAvailable(rime)
 # Using FetchContent_Declare together with CMAKE_ARGS
-FetchContent_Populate(rime)
+FetchContent_Populate({{{lowername}}})
 # https://stackoverflow.com/questions/62101576/
-set(BUILD_STATIC ON CACHE INTERNAL "Build static")
-set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "Don't build shared")
-add_subdirectory(${rime_SOURCE_DIR} ${rime_BINARY_DIR})
+add_subdirectory(${{{{lowername}}}_SOURCE_DIR} ${{{{lowername}}}_BINARY_DIR})
 
 # list(POP_BACK PKG_CONFIG_EXECUTABLE)
 

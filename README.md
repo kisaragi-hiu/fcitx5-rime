@@ -2,6 +2,8 @@
 
 A hack to use be able to switch to a different RIME schema as an Fcitx5-level input method.
 
+Still incomplete. Builds but cannot be loaded.
+
 If you use RIME for just one language (typically Mandarin), you won't switch schemas that often, so having it be on a separate key is fine.
 
 But if you use RIME for more languages, like Cantonese or Taiwanese, now switching languages requires you to think about which engine the input method uses — RIME, or Fcitx directly.
