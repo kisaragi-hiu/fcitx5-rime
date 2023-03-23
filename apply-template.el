@@ -21,13 +21,13 @@ If KEY is nil, return the whole data instead."
     (shell-command-to-string "rm -rf rebranded"))
   (make-directory "rebranded" t))
 
-(defun t:prepare-files ()
-  "Copy the files over and apply the placeholders."
-  (dolist (path (directory-files-recursively "template" "."))
+(defun t:prepare-files (dir)
+  "Copy the files over from DIR and apply the placeholders."
+  (dolist (path (directory-files-recursively dir "."))
     (let ((newpath
            (thread-last
              path
-             (replace-regexp-in-string "\\`template" "rebranded")
+             (replace-regexp-in-string (format "\\`%s" dir) "rebranded")
              (replace-regexp-in-string
               "{{{\\([^{}]+\\)}}}"
               (lambda (str)
@@ -45,7 +45,8 @@ If KEY is nil, return the whole data instead."
                (error "%s: %s is not a valid key" path (match-string 1)))))))))
 
 (t:prepare-directory)
-(t:prepare-files)
+(t:prepare-files (or (car argv)
+                     "template"))
 
 ;; Local Variables:
 ;; mode: lisp-interaction

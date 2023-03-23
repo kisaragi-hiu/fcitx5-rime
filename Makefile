@@ -1,5 +1,5 @@
 archpkg:
-	emacs --script apply-template.el
+	emacs --script apply-template.el template
 	cd rebranded && makepkg -s
 	mv rebranded/fcitx5-*.zst .
 
