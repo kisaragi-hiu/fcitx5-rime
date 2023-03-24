@@ -5,6 +5,14 @@ set({{{uppername}}}_SOURCES
     {{{lowername}}}service.cpp
 )
 add_library(fcitx5_{{{lowername}}} MODULE ${{{{uppername}}}_SOURCES})
+
+# https://stackoverflow.com/a/52333281
+find_path({{{uppername}}}_INCLUDE_DIR
+  NAMES {{{lowername}}}_api.h
+  PATHS "${PROJECT_SOURCE_DIR}/../rebranded-librime/src")
+target_include_directories(fcitx5_{{{lowername}}}
+  PRIVATE ${{{{uppername}}}_INCLUDE_DIR})
+
 target_link_libraries(fcitx5_{{{lowername}}}
   Fcitx5::Core
   Fcitx5::Config
