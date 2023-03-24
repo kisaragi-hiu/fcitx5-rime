@@ -14,8 +14,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="rime-disable.svg"
-   inkscape:export-filename="/home/marguerite/Public/fcitx-artwork/rime/rime-im.png"
+   sodipodi:docname="{{{lowername}}}-disable.svg"
+   inkscape:export-filename="/home/marguerite/Public/fcitx-artwork/{{{lowername}}}/{{{lowername}}}-im.png"
    inkscape:export-xdpi="82.5"
    inkscape:export-ydpi="82.5">
   <defs
@@ -31,7 +31,7 @@
      inkscape:cx="-16.344937"
      inkscape:cy="-14.070723"
      inkscape:document-units="px"
-     inkscape:current-layer="rime-disable"
+     inkscape:current-layer="{{{lowername}}}-disable"
      showgrid="false"
      inkscape:window-width="1600"
      inkscape:window-height="1180"
@@ -58,7 +58,7 @@
      id="layer1"
      transform="translate(0,-1004.3622)">
     <g
-       id="rime-disable"
+       id="{{{lowername}}}-disable"
        inkscape:export-xdpi="82.5"
        inkscape:export-ydpi="82.5">
       <g

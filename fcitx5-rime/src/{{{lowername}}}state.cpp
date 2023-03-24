@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#include "rimestate.h"
-#include "rimecandidate.h"
+#include "{{{lowername}}}state.h"
+#include "{{{lowername}}}candidate.h"
 #include <fcitx-utils/utf8.h>
 #include <fcitx/candidatelist.h>
 #include <fcitx/inputcontext.h>
@@ -24,12 +24,12 @@ bool emptyExceptAux(const InputPanel &inputPanel) {
 }
 } // namespace
 
-RimeState::RimeState(RimeEngine *engine, InputContext &ic)
+{{{name}}}State::{{{name}}}State({{{name}}}Engine *engine, InputContext &ic)
     : engine_(engine), ic_(ic) {
     createSession();
 }
 
-RimeState::~RimeState() {
+{{{name}}}State::~{{{name}}}State() {
     if (auto api = engine_->api()) {
         if (session_) {
             api->destroy_session(session_);
@@ -37,7 +37,7 @@ RimeState::~RimeState() {
     }
 }
 
-void RimeState::clear() {
+void {{{name}}}State::clear() {
     if (auto api = engine_->api()) {
         if (session_) {
             api->clear_composition(session_);
@@ -45,9 +45,9 @@ void RimeState::clear() {
     }
 }
 
-std::string RimeState::subMode() {
+std::string {{{name}}}State::subMode() {
     std::string result;
-    getStatus([&result](const RimeStatus &status) {
+    getStatus([&result](const {{{name}}}Status &status) {
         if (status.is_disabled) {
             result = "\xe2\x8c\x9b";
         } else if (status.is_ascii_mode) {
@@ -59,9 +59,9 @@ std::string RimeState::subMode() {
     return result;
 }
 
-std::string RimeState::subModeLabel() {
+std::string {{{name}}}State::subModeLabel() {
     std::string result;
-    getStatus([this, &result](const RimeStatus &status) {
+    getStatus([this, &result](const {{{name}}}Status &status) {
         if (status.is_disabled) {
             result = "";
         } else if (status.is_ascii_mode) {
@@ -79,7 +79,7 @@ std::string RimeState::subModeLabel() {
     return result;
 }
 
-void RimeState::setLatinMode(bool latin) {
+void {{{name}}}State::setLatinMode(bool latin) {
     auto api = engine_->api();
     if (!api || api->is_maintenance_mode()) {
         return;
@@ -87,7 +87,7 @@ void RimeState::setLatinMode(bool latin) {
     api->set_option(session_, "ascii_mode", latin);
 }
 
-void RimeState::selectSchema(const std::string &schema) {
+void {{{name}}}State::selectSchema(const std::string &schema) {
     auto api = engine_->api();
     if (!api || api->is_maintenance_mode()) {
         return;
@@ -96,7 +96,7 @@ void RimeState::selectSchema(const std::string &schema) {
     api->select_schema(session_, schema.data());
 }
 
-void RimeState::keyEvent(KeyEvent &event) {
+void {{{name}}}State::keyEvent(KeyEvent &event) {
     auto api = engine_->api();
     if (!api || api->is_maintenance_mode()) {
         return;
@@ -124,7 +124,7 @@ void RimeState::keyEvent(KeyEvent &event) {
     auto result = api->process_key(session_, event.rawKey().sym(), intStates);
 
     auto ic = event.inputContext();
-    RIME_STRUCT(RimeCommit, commit);
+    {{{uppername}}}_STRUCT({{{name}}}Commit, commit);
     if (api->get_commit(session_, &commit)) {
         ic->commitString(commit.text);
         api->free_commit(&commit);
@@ -137,8 +137,8 @@ void RimeState::keyEvent(KeyEvent &event) {
     }
 }
 
-bool RimeState::getStatus(
-    const std::function<void(const RimeStatus &)> &callback) {
+bool {{{name}}}State::getStatus(
+    const std::function<void(const {{{name}}}Status &)> &callback) {
     auto api = engine_->api();
     if (!api) {
         return false;
@@ -149,7 +149,7 @@ bool RimeState::getStatus(
     if (!session_) {
         return false;
     }
-    RIME_STRUCT(RimeStatus, status);
+    {{{uppername}}}_STRUCT({{{name}}}Status, status);
     if (!api->get_status(session_, &status)) {
         return false;
     }
@@ -158,7 +158,7 @@ bool RimeState::getStatus(
     return true;
 }
 
-void RimeState::updatePreedit(InputContext *ic, const RimeContext &context) {
+void {{{name}}}State::updatePreedit(InputContext *ic, const {{{name}}}Context &context) {
     Text preedit;
     Text clientPreedit;
 
@@ -230,7 +230,7 @@ void RimeState::updatePreedit(InputContext *ic, const RimeContext &context) {
     ic->inputPanel().setClientPreedit(clientPreedit);
 }
 
-void RimeState::updateUI(InputContext *ic, bool keyRelease) {
+void {{{name}}}State::updateUI(InputContext *ic, bool keyRelease) {
     auto &inputPanel = ic->inputPanel();
     if (!keyRelease) {
         inputPanel.reset();
@@ -247,7 +247,7 @@ void RimeState::updateUI(InputContext *ic, bool keyRelease) {
             return;
         }
 
-        RIME_STRUCT(RimeContext, context);
+        {{{uppername}}}_STRUCT({{{name}}}Context, context);
         if (!api->get_context(session_, &context)) {
             break;
         }
@@ -256,7 +256,7 @@ void RimeState::updateUI(InputContext *ic, bool keyRelease) {
 
         if (context.menu.num_candidates) {
             ic->inputPanel().setCandidateList(
-                std::make_unique<RimeCandidateList>(engine_, ic, context));
+                std::make_unique<{{{name}}}CandidateList>(engine_, ic, context));
         } else {
             ic->inputPanel().setCandidateList(nullptr);
         }
@@ -284,7 +284,7 @@ void RimeState::updateUI(InputContext *ic, bool keyRelease) {
     }
 }
 
-void RimeState::release() {
+void {{{name}}}State::release() {
     if (auto api = engine_->api()) {
         if (session_) {
             api->destroy_session(session_);
@@ -293,9 +293,9 @@ void RimeState::release() {
     }
 }
 
-void RimeState::commitPreedit(InputContext *ic) {
+void {{{name}}}State::commitPreedit(InputContext *ic) {
     if (auto api = engine_->api()) {
-        RIME_STRUCT(RimeContext, context);
+        {{{uppername}}}_STRUCT({{{name}}}Context, context);
         if (!api->get_context(session_, &context)) {
             return;
         }
@@ -306,7 +306,7 @@ void RimeState::commitPreedit(InputContext *ic) {
     }
 }
 
-void RimeState::createSession() {
+void {{{name}}}State::createSession() {
     auto api = engine_->api();
     if (!api) {
         return;
@@ -322,7 +322,7 @@ void RimeState::createSession() {
 
     const auto &appOptions = engine_->appOptions();
     if (auto iter = appOptions.find(ic_.program()); iter != appOptions.end()) {
-        RIME_DEBUG() << "Apply app options to " << ic_.program() << ": "
+        {{{uppername}}}_DEBUG() << "Apply app options to " << ic_.program() << ": "
                      << iter->second;
         for (const auto &[key, value] : iter->second) {
             api->set_option(session_, key.data(), value);

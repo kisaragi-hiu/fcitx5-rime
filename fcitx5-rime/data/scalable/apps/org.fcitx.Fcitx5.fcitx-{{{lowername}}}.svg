@@ -14,8 +14,8 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="rime.svg"
-   inkscape:export-filename="/home/lotem/code/rime/artworks/zhung.png"
+   sodipodi:docname="{{{lowername}}}.svg"
+   inkscape:export-filename="/home/lotem/code/{{{lowername}}}/artworks/zhung.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs

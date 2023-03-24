@@ -4,20 +4,20 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef _FCITX5_RIME_RIMESERVICE_H_
-#define _FCITX5_RIME_RIMESERVICE_H_
+#ifndef _FCITX5_{{{uppername}}}_{{{uppername}}}SERVICE_H_
+#define _FCITX5_{{{uppername}}}_{{{uppername}}}SERVICE_H_
 
 #include <fcitx-utils/dbus/message.h>
 #include <fcitx-utils/dbus/objectvtable.h>
 
 namespace fcitx {
 
-class RimeEngine;
-class RimeState;
+class {{{name}}}Engine;
+class {{{name}}}State;
 
-class RimeService : public dbus::ObjectVTable<RimeService> {
+class {{{name}}}Service : public dbus::ObjectVTable<{{{name}}}Service> {
 public:
-    RimeService(RimeEngine *engine);
+    {{{name}}}Service({{{name}}}Engine *engine);
 
     void setAsciiMode(bool asciiMode);
     bool isAsciiMode();
@@ -26,16 +26,16 @@ public:
     std::vector<std::string> listAllSchemas();
 
 private:
-    RimeState *currentState();
+    {{{name}}}State *currentState();
     FCITX_OBJECT_VTABLE_METHOD(setAsciiMode, "SetAsciiMode", "b", "");
     FCITX_OBJECT_VTABLE_METHOD(isAsciiMode, "IsAsciiMode", "", "b");
     FCITX_OBJECT_VTABLE_METHOD(setSchema, "SetSchema", "s", "");
     FCITX_OBJECT_VTABLE_METHOD(currentSchema, "GetCurrentSchema", "", "s");
     FCITX_OBJECT_VTABLE_METHOD(listAllSchemas, "ListAllSchemas", "", "as");
 
-    RimeEngine *engine_;
+    {{{name}}}Engine *engine_;
 };
 
 } // namespace fcitx
 
-#endif // _FCITX5_RIME_RIMESERVICE_H_
+#endif // _FCITX5_{{{uppername}}}_{{{uppername}}}SERVICE_H_

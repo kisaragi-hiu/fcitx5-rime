@@ -2,4 +2,4 @@ install(DIRECTORY 48x48 scalable DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hic
         PATTERN .* EXCLUDE
         PATTERN *~ EXCLUDE)
 
-install(FILES fcitx5_{{{lowername}}}.yaml DESTINATION "${RIME_DATA_DIR}")
+install(FILES fcitx5_{{{lowername}}}.yaml DESTINATION "${{{{uppername}}}_DATA_DIR}")

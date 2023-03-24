@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#include "rimeservice.h"
+#include "{{{lowername}}}service.h"
 #include "dbus_public.h"
-#include "rimestate.h"
+#include "{{{lowername}}}state.h"
 
 namespace fcitx {
 
-RimeService::RimeService(RimeEngine *engine) : engine_(engine) {
+{{{name}}}Service::{{{name}}}Service({{{name}}}Engine *engine) : engine_(engine) {
     auto dbus = engine->dbus();
     if (!dbus) {
         return;
@@ -19,7 +19,7 @@ RimeService::RimeService(RimeEngine *engine) : engine_(engine) {
     bus->addObjectVTable("/{{{lowername}}}", "org.fcitx.Fcitx.{{{name}}}1", *this);
 }
 
-RimeState *RimeService::currentState() {
+{{{name}}}State *{{{name}}}Service::currentState() {
     auto ic = engine_->instance()->mostRecentInputContext();
     if (!ic) {
         return nullptr;
@@ -27,7 +27,7 @@ RimeState *RimeService::currentState() {
     return engine_->state(ic);
 }
 
-void RimeService::setAsciiMode(bool ascii) {
+void {{{name}}}Service::setAsciiMode(bool ascii) {
     if (auto state = currentState()) {
         state->setLatinMode(ascii);
         if (auto ic = engine_->instance()->mostRecentInputContext();
@@ -37,17 +37,17 @@ void RimeService::setAsciiMode(bool ascii) {
     }
 }
 
-bool RimeService::isAsciiMode() {
+bool {{{name}}}Service::isAsciiMode() {
     bool isAscii = false;
     if (auto state = currentState()) {
-        state->getStatus([&isAscii](const RimeStatus &status) {
+        state->getStatus([&isAscii](const {{{name}}}Status &status) {
             isAscii = status.is_ascii_mode;
         });
     }
     return isAscii;
 }
 
-void RimeService::setSchema(const std::string &schema) {
+void {{{name}}}Service::setSchema(const std::string &schema) {
     if (auto state = currentState()) {
         state->selectSchema(schema);
         if (auto ic = engine_->instance()->mostRecentInputContext();
@@ -57,21 +57,21 @@ void RimeService::setSchema(const std::string &schema) {
     }
 }
 
-std::string RimeService::currentSchema() {
+std::string {{{name}}}Service::currentSchema() {
     std::string result;
     auto state = currentState();
     if (state) {
-        state->getStatus([&result](const RimeStatus &status) {
+        state->getStatus([&result](const {{{name}}}Status &status) {
             result = status.schema_id ? status.schema_id : "";
         });
     }
     return result;
 }
 
-std::vector<std::string> RimeService::listAllSchemas() {
+std::vector<std::string> {{{name}}}Service::listAllSchemas() {
     std::vector<std::string> schemas;
     if (auto api = engine_->api()) {
-        RimeSchemaList list;
+        {{{name}}}SchemaList list;
         list.size = 0;
         if (api->get_schema_list(&list)) {
             for (size_t i = 0; i < list.size; i++) {

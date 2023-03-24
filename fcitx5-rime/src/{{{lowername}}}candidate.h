@@ -3,32 +3,32 @@
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
-#ifndef _FCITX_RIMECANDIDATE_H_
-#define _FCITX_RIMECANDIDATE_H_
+#ifndef _FCITX_{{{uppername}}}CANDIDATE_H_
+#define _FCITX_{{{uppername}}}CANDIDATE_H_
 
-#include "rimeengine.h"
-#include "rimestate.h"
+#include "{{{lowername}}}engine.h"
+#include "{{{lowername}}}state.h"
 #include <fcitx/candidatelist.h>
 
 namespace fcitx {
 
-class RimeCandidateWord : public CandidateWord {
+class {{{name}}}CandidateWord : public CandidateWord {
 public:
-    RimeCandidateWord(RimeEngine *engine, const RimeCandidate &candidate,
+    {{{name}}}CandidateWord({{{name}}}Engine *engine, const {{{name}}}Candidate &candidate,
                       KeySym sym);
 
     void select(InputContext *inputContext) const override;
 
 private:
-    RimeEngine *engine_;
+    {{{name}}}Engine *engine_;
     KeySym sym_;
 };
 
-class RimeCandidateList final : public CandidateList,
+class {{{name}}}CandidateList final : public CandidateList,
                                 public PageableCandidateList {
 public:
-    RimeCandidateList(RimeEngine *engine, InputContext *ic,
-                      const RimeContext &context);
+    {{{name}}}CandidateList({{{name}}}Engine *engine, InputContext *ic,
+                      const {{{name}}}Context &context);
 
     const Text &label(int idx) const override {
         checkIndex(idx);
@@ -69,7 +69,7 @@ private:
         }
     }
 
-    RimeEngine *engine_;
+    {{{name}}}Engine *engine_;
     InputContext *ic_;
     std::vector<Text> labels_;
     bool hasPrev_ = false;
@@ -80,4 +80,4 @@ private:
 };
 } // namespace fcitx
 
-#endif // _FCITX_RIMECANDIDATE_H_
+#endif // _FCITX_{{{uppername}}}CANDIDATE_H_

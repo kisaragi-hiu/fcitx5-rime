@@ -1,10 +1,10 @@
-set(RIME_SOURCES
-    rimestate.cpp
-    rimeengine.cpp
-    rimecandidate.cpp
-    rimeservice.cpp
+set({{{uppername}}}_SOURCES
+    {{{lowername}}}state.cpp
+    {{{lowername}}}engine.cpp
+    {{{lowername}}}candidate.cpp
+    {{{lowername}}}service.cpp
 )
-add_library(fcitx5_{{{lowername}}} MODULE ${RIME_SOURCES})
+add_library(fcitx5_{{{lowername}}} MODULE ${{{{uppername}}}_SOURCES})
 target_link_libraries(fcitx5_{{{lowername}}}
   Fcitx5::Core
   Fcitx5::Config

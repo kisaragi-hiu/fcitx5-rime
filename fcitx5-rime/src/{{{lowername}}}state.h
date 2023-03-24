@@ -3,24 +3,24 @@
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
-#ifndef _FCITX_RIMESTATE_H_
-#define _FCITX_RIMESTATE_H_
+#ifndef _FCITX_{{{uppername}}}STATE_H_
+#define _FCITX_{{{uppername}}}STATE_H_
 
-#include "rimeengine.h"
+#include "{{{lowername}}}engine.h"
 #include <fcitx/inputcontextproperty.h>
 
 namespace fcitx {
 
-class RimeState : public InputContextProperty {
+class {{{name}}}State : public InputContextProperty {
 public:
-    RimeState(RimeEngine *engine, InputContext &ic);
+    {{{name}}}State({{{name}}}Engine *engine, InputContext &ic);
 
-    virtual ~RimeState();
+    virtual ~{{{name}}}State();
 
     void clear();
     void keyEvent(KeyEvent &event);
-    bool getStatus(const std::function<void(const RimeStatus &)> &);
-    void updatePreedit(InputContext *ic, const RimeContext &context);
+    bool getStatus(const std::function<void(const {{{name}}}Status &)> &);
+    void updatePreedit(InputContext *ic, const {{{name}}}Context &context);
     void updateUI(InputContext *ic, bool keyRelease);
     void release();
     void commitPreedit(InputContext *ic);
@@ -33,10 +33,10 @@ private:
     void createSession();
 
     std::string lastMode_;
-    RimeEngine *engine_;
-    RimeSessionId session_ = 0;
+    {{{name}}}Engine *engine_;
+    {{{name}}}SessionId session_ = 0;
     InputContext &ic_;
 };
 } // namespace fcitx
 
-#endif // _FCITX_RIMESTATE_H_
+#endif // _FCITX_{{{uppername}}}STATE_H_

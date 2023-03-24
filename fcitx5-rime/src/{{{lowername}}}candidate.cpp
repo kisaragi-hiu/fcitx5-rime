@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#include "rimecandidate.h"
+#include "{{{lowername}}}candidate.h"
 #include <cstring>
 
 namespace fcitx {
 
-RimeCandidateWord::RimeCandidateWord(RimeEngine *engine,
-                                     const RimeCandidate &candidate, KeySym sym)
+{{{name}}}CandidateWord::{{{name}}}CandidateWord({{{name}}}Engine *engine,
+                                     const {{{name}}}Candidate &candidate, KeySym sym)
     : CandidateWord(), engine_(engine), sym_(sym) {
     Text text;
     text.append(std::string(candidate.text));
@@ -21,8 +21,8 @@ RimeCandidateWord::RimeCandidateWord(RimeEngine *engine,
     setText(text);
 }
 
-void RimeCandidateWord::select(InputContext *inputContext) const {
-    // Rime does not provide such an API, simulate the selection with a fake
+void {{{name}}}CandidateWord::select(InputContext *inputContext) const {
+    // {{{name}}} does not provide such an API, simulate the selection with a fake
     // key event.
     if (auto state = engine_->state(inputContext)) {
         KeyEvent event(inputContext, Key(sym_));
@@ -30,8 +30,8 @@ void RimeCandidateWord::select(InputContext *inputContext) const {
     }
 }
 
-RimeCandidateList::RimeCandidateList(RimeEngine *engine, InputContext *ic,
-                                     const RimeContext &context)
+{{{name}}}CandidateList::{{{name}}}CandidateList({{{name}}}Engine *engine, InputContext *ic,
+                                     const {{{name}}}Context &context)
     : engine_(engine), ic_(ic), hasPrev_(context.menu.page_no != 0),
       hasNext_(!context.menu.is_last_page) {
     setPageable(this);
@@ -39,7 +39,7 @@ RimeCandidateList::RimeCandidateList(RimeEngine *engine, InputContext *ic,
     const auto &menu = context.menu;
 
     int num_select_keys = menu.select_keys ? strlen(menu.select_keys) : 0;
-    bool has_label = RIME_STRUCT_HAS_MEMBER(context, context.select_labels) &&
+    bool has_label = {{{uppername}}}_STRUCT_HAS_MEMBER(context, context.select_labels) &&
                      context.select_labels;
 
     int i;
@@ -61,7 +61,7 @@ RimeCandidateList::RimeCandidateList(RimeEngine *engine, InputContext *ic,
         } else {
             sym = static_cast<KeySym>('0' + (i + 1) % 10);
         }
-        candidateWords_.emplace_back(std::make_unique<RimeCandidateWord>(
+        candidateWords_.emplace_back(std::make_unique<{{{name}}}CandidateWord>(
             engine, menu.candidates[i], sym));
 
         if (i == menu.highlighted_candidate_index) {

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
-#ifndef _FCITX_RIMEENGINE_H_
-#define _FCITX_RIMEENGINE_H_
+#ifndef _FCITX_{{{uppername}}}ENGINE_H_
+#define _FCITX_{{{uppername}}}ENGINE_H_
 
-#include "rimeservice.h"
+#include "{{{lowername}}}service.h"
 #include <fcitx-config/configuration.h>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/event.h>
@@ -23,14 +23,14 @@
 #include <fcitx/instance.h>
 #include <fcitx/menu.h>
 #include <memory>
-#include <rime_api.h>
+#include <{{{lowername}}}_api.h>
 
 namespace fcitx {
 
-class RimeState;
+class {{{name}}}State;
 
 FCITX_CONFIGURATION(
-    RimeEngineConfig,
+    {{{name}}}EngineConfig,
     Option<bool> showPreeditInApplication{this, "PreeditInApplication",
                                           _("Show preedit within application"),
                                           true};
@@ -50,7 +50,7 @@ FCITX_CONFIGURATION(
                                       "{{{lowername}}}"),
                 "\"", "\"\"\""),
             "\"")};
-#ifdef FCITX_RIME_LOAD_PLUGIN
+#ifdef FCITX_{{{uppername}}}_LOAD_PLUGIN
     Option<bool> autoloadPlugins{this, "AutoloadPlugins",
                                  _("Load available plugins automatically"),
                                  false};
@@ -61,10 +61,10 @@ FCITX_CONFIGURATION(
 #endif
 );
 
-class RimeEngine final : public InputMethodEngineV2 {
+class {{{name}}}Engine final : public InputMethodEngineV2 {
 public:
-    RimeEngine(Instance *instance);
-    ~RimeEngine();
+    {{{name}}}Engine(Instance *instance);
+    ~{{{name}}}Engine();
     Instance *instance() { return instance_; }
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
@@ -95,20 +95,20 @@ public:
                                 InputContext &) override;
     std::string subModeLabelImpl(const InputMethodEntry &,
                                  InputContext &) override;
-    const RimeEngineConfig &config() const { return config_; }
+    const {{{name}}}EngineConfig &config() const { return config_; }
 
-    rime_api_t *api() { return api_; }
+    {{{lowername}}}_api_t *api() { return api_; }
     const auto &appOptions() const { return appOptions_; }
 
-    void rimeStart(bool fullcheck);
+    void {{{lowername}}}Start(bool fullcheck);
 
-    RimeState *state(InputContext *ic);
+    {{{name}}}State *state(InputContext *ic);
 
     FCITX_ADDON_DEPENDENCY_LOADER(dbus, instance_->addonManager());
 
 private:
-    static void rimeNotificationHandler(void *context_object,
-                                        RimeSessionId session_id,
+    static void {{{lowername}}}NotificationHandler(void *context_object,
+                                        {{{name}}}SessionId session_id,
                                         const char *message_type,
                                         const char *message_value);
 
@@ -120,15 +120,15 @@ private:
     IconTheme theme_;
     Instance *instance_;
     EventDispatcher eventDispatcher_;
-    rime_api_t *api_;
+    {{{lowername}}}_api_t *api_;
     bool firstRun_ = true;
-    FactoryFor<RimeState> factory_;
+    FactoryFor<{{{name}}}State> factory_;
 
     std::unique_ptr<Action> imAction_;
     SimpleAction deployAction_;
     SimpleAction syncAction_;
 
-    RimeEngineConfig config_;
+    {{{name}}}EngineConfig config_;
     std::unordered_map<std::string, std::unordered_map<std::string, bool>>
         appOptions_;
 
@@ -136,26 +136,26 @@ private:
 
     std::list<SimpleAction> schemActions_;
     Menu schemaMenu_;
-#ifdef FCITX_RIME_LOAD_PLUGIN
+#ifdef FCITX_{{{uppername}}}_LOAD_PLUGIN
     std::unordered_map<std::string, Library> pluginPool_;
 #endif
     std::unique_ptr<EventSourceTime> timeEvent_;
 
-    RimeService service_{this};
+    {{{name}}}Service service_{this};
 };
 
-class RimeEngineFactory : public AddonFactory {
+class {{{name}}}EngineFactory : public AddonFactory {
 public:
     AddonInstance *create(AddonManager *manager) override {
         registerDomain("fcitx5-{{{lowername}}}", FCITX_INSTALL_LOCALEDIR);
-        return new RimeEngine(manager->instance());
+        return new {{{name}}}Engine(manager->instance());
     }
 };
 } // namespace fcitx
 
 FCITX_DECLARE_LOG_CATEGORY({{{lowername}}});
 
-#define RIME_DEBUG() FCITX_LOGC({{{lowername}}}, Debug)
-#define RIME_ERROR() FCITX_LOGC({{{lowername}}}, Error)
+#define {{{uppername}}}_DEBUG() FCITX_LOGC({{{lowername}}}, Debug)
+#define {{{uppername}}}_ERROR() FCITX_LOGC({{{lowername}}}, Error)
 
-#endif // _FCITX_RIMEENGINE_H_
+#endif // _FCITX_{{{uppername}}}ENGINE_H_
