@@ -11,10 +11,10 @@
 namespace fcitx::rime {
 
 AddonInstance *RimeEngineFactory::create(AddonManager *manager) {
-    registerDomain("fcitx5-rime", FCITX_INSTALL_LOCALEDIR);
+    registerDomain("fcitx5-rime-taigi", FCITX_INSTALL_LOCALEDIR);
     return new RimeEngine(manager->instance());
 }
 
 } // namespace fcitx::rime
 
-FCITX_ADDON_FACTORY_V2(rime, fcitx::rime::RimeEngineFactory)
+FCITX_ADDON_FACTORY_V2(rime_taigi, fcitx::rime::RimeEngineFactory)

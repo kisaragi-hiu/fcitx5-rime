@@ -1,0 +1,7 @@
+[InputMethod]
+Name=Rime Taigi
+Icon=fcitx-rime
+Label=T
+LangCode=nan_TW
+Addon=rime_taigi
+Configurable=True

@@ -1,9 +1,9 @@
 [Addon]
-Name=Rime
-Comment=Rime Wrapper For Fcitx
+Name=Rime Taigi
+Comment=Duplicated Rime Wrapper For Fcitx
 Category=InputMethod
 Version=@PROJECT_VERSION@
-Library=export:librime
+Library=export:librime-taigi
 Type=@FCITX_ADDON_TYPE@
 OnDemand=True
 Configurable=True

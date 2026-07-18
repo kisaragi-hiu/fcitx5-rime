@@ -102,7 +102,7 @@ FCITX_CONFIGURATION(
             "xdg-open \"",
             stringutils::replaceAll((StandardPaths::global().userDirectory(
                                          StandardPathsType::PkgData) /
-                                     "rime")
+                                     "rime-taigi")
                                         .string(),
                                     "\"", "\"\"\""),
             "\"")};
@@ -132,7 +132,7 @@ public:
     const Configuration *getConfig() const override { return &config_; }
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
-        safeSaveAsIni(config_, "conf/rime.conf");
+        safeSaveAsIni(config_, "conf/rime-taigi.conf");
         updateConfig();
     }
     void setSubConfig(const std::string &path,

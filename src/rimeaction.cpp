@@ -44,7 +44,7 @@ ToggleAction::ToggleAction(RimeEngine *engine, std::string_view schema,
     : engine_(engine), option_(option), disabledText_(std::move(disabledText)),
       enabledText_(std::move(enabledText)) {
     engine_->instance()->userInterfaceManager().registerAction(
-        stringutils::concat("fcitx-rime-", schema, "-", option), this);
+        stringutils::concat("fcitx-rime-taigi-", schema, "-", option), this);
 }
 
 void ToggleAction::activate(InputContext *ic) {
@@ -109,13 +109,14 @@ SelectAction::SelectAction(RimeEngine *engine, std::string_view schema,
                 }
             });
         engine_->instance()->userInterfaceManager().registerAction(
-            stringutils::concat("fcitx-rime-", schema, "-", options_[i]),
+            stringutils::concat("fcitx-rime-taigi-", schema, "-", options_[i]),
             &actions_.back());
         menu_.addAction(&actions_.back());
     }
     setMenu(&menu_);
     engine_->instance()->userInterfaceManager().registerAction(
-        stringutils::concat("fcitx-rime-", schema, "-select-", options[0]),
+        stringutils::concat("fcitx-rime-taigi-", schema, "-select-",
+                            options[0]),
         this);
 }
 

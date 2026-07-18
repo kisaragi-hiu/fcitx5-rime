@@ -17,7 +17,7 @@ RimeService::RimeService(RimeEngine *engine) : engine_(engine) {
         return;
     }
     auto bus = dbus->call<IDBusModule::bus>();
-    bus->addObjectVTable("/rime", "org.fcitx.Fcitx.Rime1", *this);
+    bus->addObjectVTable("/rime-taigi", "org.fcitx.Fcitx.RimeTaigi1", *this);
 }
 
 RimeState *RimeService::currentState() {

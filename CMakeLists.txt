@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6.0)
 
-project(fcitx5-rime VERSION 5.1.14)
+project(fcitx5-rime-taigi VERSION 5.1.14)
 
 set(REQUIRED_FCITX_VERSION 5.1.13)
 
@@ -34,7 +34,7 @@ if(NOT DEFINED RIME_DATA_DIR)
 endif(NOT DEFINED RIME_DATA_DIR)
 message(STATUS "Precompiler macro RIME_DATA_DIR is set to \"${RIME_DATA_DIR}\"")
 add_definitions(-DRIME_DATA_DIR="${RIME_DATA_DIR}")
-add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-rime\")
+add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-rime-taigi\")
 add_definitions(-DFCITX_RIME_VERSION=\"${PROJECT_VERSION}\")
 fcitx5_add_i18n_definition()
 
@@ -48,10 +48,10 @@ add_subdirectory(po)
 add_subdirectory(src)
 add_subdirectory(data)
 
-fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.Rime.metainfo.xml.in
-                              org.fcitx.Fcitx5.Addon.Rime.metainfo.xml XML)
+fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.RimeTaigi.metainfo.xml.in
+                              org.fcitx.Fcitx5.Addon.RimeTaigi.metainfo.xml XML)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.Fcitx5.Addon.Rime.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.Fcitx5.Addon.RimeTaigi.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

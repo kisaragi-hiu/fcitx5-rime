@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
-  <id>org.fcitx.Fcitx5.Addon.Rime</id>
+  <id>org.fcitx.Fcitx5.Addon.RimeTaigi</id>
   <extends>org.fcitx.Fcitx5</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-2.1+</project_license>
-  <name>Rime for Fcitx 5</name>
-  <summary>Rime input method</summary>
+  <name>Rime for Fcitx 5 (Taigi)</name>
+  <summary>Rime input method, marked as for nan_TW instead of for zh</summary>
   <developer id="org.fcitx-im">
-      <name>The Fcitx Team</name>
+    <name>The Fcitx Team</name>
   </developer>
   <url type="homepage">https://fcitx-im.org</url>
-  <url type="bugtracker">https://github.com/fcitx/fcitx5-rime/issues</url>
-  <url type="vcs-browser">https://github.com/fcitx/fcitx5-rime</url>
+  <url type="bugtracker">https://github.com/kisaragi-hiu/fcitx5-rime-taigi/issues</url>
+  <url type="vcs-browser">https://github.com/kisaragi-hiu/fcitx5-rime-taigi</url>
   <project_group>Fcitx</project_group>
   <releases>
     <release version="5.1.14" date="2026-06-19"/>
@@ -49,4 +49,3 @@
   </releases>
   <content_rating type="oars-1.1"/>
 </component>
-

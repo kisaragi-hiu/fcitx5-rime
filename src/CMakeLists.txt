@@ -23,12 +23,14 @@ else()
     add_definitions(-DFCITX_RIME_NO_DBUS)
 endif()
 
-add_fcitx5_addon(rime ${RIME_SOURCES})
-target_link_libraries(rime ${RIME_LINK_LIBRARIES})
-install(TARGETS rime DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
-fcitx5_translate_desktop_file(rime.conf.in rime.conf)
-configure_file(rime-addon.conf.in.in rime-addon.conf.in)
-fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/rime-addon.conf.in" rime-addon.conf)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rime.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/inputmethod" COMPONENT config)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rime-addon.conf" RENAME rime.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon" COMPONENT config)
-
+add_fcitx5_addon(rime-taigi ${RIME_SOURCES})
+target_link_libraries(rime-taigi ${RIME_LINK_LIBRARIES})
+install(TARGETS rime-taigi DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
+fcitx5_translate_desktop_file(rime-taigi.conf.in rime-taigi.conf)
+configure_file(rime-taigi-addon.conf.in.in rime-taigi-addon.conf.in)
+fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/rime-taigi-addon.conf.in" rime-taigi-addon.conf)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rime-taigi.conf" DESTINATION "${FCITX_INSTALL_PKGDATADIR}/inputmethod" COMPONENT config)
+# Note the name of this file is used as the addon's unique name, then used as
+# part of the name of the entry point function. So it must be a valid C
+# identifier.
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rime-taigi-addon.conf" RENAME rime_taigi.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon" COMPONENT config)

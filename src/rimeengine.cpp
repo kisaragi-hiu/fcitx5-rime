@@ -48,7 +48,7 @@
 #include <utility>
 #include <vector>
 
-FCITX_DEFINE_LOG_CATEGORY(rime_log, "rime");
+FCITX_DEFINE_LOG_CATEGORY(rime_log, "rime-taigi");
 
 namespace fcitx::rime {
 
@@ -191,13 +191,13 @@ RimeEngine::RimeEngine(Instance *instance)
         sharedDataDir_ = RIME_DATA_DIR;
     }
     imAction_ = std::make_unique<IMAction>(this);
-    instance_->userInterfaceManager().registerAction("fcitx-rime-im",
+    instance_->userInterfaceManager().registerAction("fcitx-rime-taigi-im",
                                                      imAction_.get());
     imAction_->setMenu(&schemaMenu_);
     eventDispatcher_.attach(&instance_->eventLoop());
     separatorAction_.setSeparator(true);
-    instance_->userInterfaceManager().registerAction("fcitx-rime-separator",
-                                                     &separatorAction_);
+    instance_->userInterfaceManager().registerAction(
+        "fcitx-rime-taigi-separator", &separatorAction_);
     deployAction_.setIcon("fcitx_rime_deploy");
     deployAction_.setShortText(_("Deploy"));
     deployAction_.connect<SimpleAction::Activated>([this](InputContext *ic) {
@@ -207,7 +207,7 @@ RimeEngine::RimeEngine(Instance *instance)
             state->updateUI(ic, false);
         }
     });
-    instance_->userInterfaceManager().registerAction("fcitx-rime-deploy",
+    instance_->userInterfaceManager().registerAction("fcitx-rime-taigi-deploy",
                                                      &deployAction_);
 
     syncAction_.setIcon("fcitx_rime_sync");
@@ -220,7 +220,7 @@ RimeEngine::RimeEngine(Instance *instance)
             state->updateUI(ic, false);
         }
     });
-    instance_->userInterfaceManager().registerAction("fcitx-rime-sync",
+    instance_->userInterfaceManager().registerAction("fcitx-rime-taigi-sync",
                                                      &syncAction_);
     schemaMenu_.addAction(&separatorAction_);
     schemaMenu_.addAction(&deployAction_);
@@ -248,7 +248,7 @@ void RimeEngine::rimeStart(bool fullcheck) {
 
     auto userDir =
         StandardPaths::global().userDirectory(StandardPathsType::PkgData) /
-        "rime";
+        "rime-taigi";
     RIME_DEBUG() << "Rime data directory: " << userDir;
     if (!fs::makePath(userDir)) {
         if (!fs::isdir(userDir)) {
@@ -258,10 +258,10 @@ void RimeEngine::rimeStart(bool fullcheck) {
 
     RIME_STRUCT(RimeTraits, fcitx_rime_traits);
     fcitx_rime_traits.shared_data_dir = sharedDataDir_.c_str();
-    fcitx_rime_traits.app_name = "rime.fcitx-rime";
+    fcitx_rime_traits.app_name = "rime.fcitx-rime-taigi";
     fcitx_rime_traits.user_data_dir = userDir.c_str();
-    fcitx_rime_traits.distribution_name = "Rime";
-    fcitx_rime_traits.distribution_code_name = "fcitx-rime";
+    fcitx_rime_traits.distribution_name = "Rime Taigi";
+    fcitx_rime_traits.distribution_code_name = "fcitx-rime-taigi";
     fcitx_rime_traits.distribution_version = FCITX_RIME_VERSION;
     // make librime only log to stderr
     // https://github.com/rime/librime/commit/6d1b9b65de4e7784a68a17d10a3e5c900e4fd511
@@ -314,7 +314,7 @@ void RimeEngine::updateAppOptions() {
 }
 
 void RimeEngine::reloadConfig() {
-    readAsIni(config_, "conf/rime.conf");
+    readAsIni(config_, "conf/rime-taigi.conf");
     updateConfig();
 }
 
@@ -339,7 +339,8 @@ void RimeEngine::updateConfig() {
     }
 
     rimeStart(false);
-    instance_->inputContextManager().registerProperty("rimeState", &factory_);
+    instance_->inputContextManager().registerProperty("rimeTaigiState",
+                                                      &factory_);
     updateSchemaMenu();
     refreshSessionPoolPolicy();
 
@@ -354,7 +355,7 @@ void RimeEngine::updateConfig() {
 void RimeEngine::refreshStatusArea(InputContext &ic) {
     // prevent modifying status area owned by other ime
     // e.g. keyboard-us when typing password
-    if (instance_->inputMethod(&ic) != "rime") {
+    if (instance_->inputMethod(&ic) != "rime-taigi") {
         return;
     }
     auto &statusArea = ic.statusArea();
@@ -397,7 +398,7 @@ void RimeEngine::refreshStatusArea(RimeSessionId session) {
 void RimeEngine::updateStatusArea(RimeSessionId session) {
     instance_->inputContextManager().foreachFocused(
         [this, session](InputContext *ic) {
-            if (instance_->inputMethod(ic) != "rime") {
+            if (instance_->inputMethod(ic) != "rime-taigi") {
                 return true;
             }
             if (auto *state = this->state(ic)) {
@@ -520,7 +521,7 @@ void RimeEngine::notify(RimeSessionId session, const std::string &messageType,
     const int timeout = 3000;
     bool blockMessage = false;
     if (messageType == "deploy") {
-        tipId = "fcitx-rime-deploy";
+        tipId = "fcitx-rime-taigi-deploy";
         icon = "fcitx_rime_deploy";
         if (messageValue == "start") {
             message = _("Rime is under maintenance. It may take a few "
@@ -529,7 +530,8 @@ void RimeEngine::notify(RimeSessionId session, const std::string &messageType,
             message = _("Rime is ready.");
             if (!api_->is_maintenance_mode()) {
                 if (needRefreshAppOption_) {
-                    api_->deploy_config_file("fcitx5.yaml", "config_version");
+                    api_->deploy_config_file("fcitx5-taigi.yaml",
+                                             "config_version");
                     updateAppOptions();
                     needRefreshAppOption_ = false;
                 }
