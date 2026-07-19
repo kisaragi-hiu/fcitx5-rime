@@ -420,7 +420,7 @@ std::vector<InputMethodEntry> RimeEngine::listInputMethods() {
     for (size_t i = 0; i < list.size; i++) {
         auto schema = list.list[i];
         auto uniqueName = stringutils::concat("rime-schema-", schema.schema_id);
-        auto name = schema.name;
+        auto name = stringutils::concat(_("Rime"), " - ", schema.name);
         // TODO: It would be nice if we can report the language of schemas
         // correctly
         auto language = "zh";
