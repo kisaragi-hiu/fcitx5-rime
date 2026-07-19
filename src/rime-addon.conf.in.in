@@ -5,7 +5,7 @@ Category=InputMethod
 Version=@PROJECT_VERSION@
 Library=export:librime
 Type=@FCITX_ADDON_TYPE@
-OnDemand=True
+OnDemand=False
 Configurable=True
 
 [Addon/Dependencies]

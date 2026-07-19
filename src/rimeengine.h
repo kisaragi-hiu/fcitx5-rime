@@ -118,6 +118,7 @@ public:
     RimeEngine(Instance *instance);
     ~RimeEngine();
     Instance *instance() { return instance_; }
+    std::vector<InputMethodEntry> listInputMethods() override;
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
     void deactivate(const InputMethodEntry &entry,

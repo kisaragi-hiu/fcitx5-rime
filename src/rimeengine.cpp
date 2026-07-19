@@ -411,6 +411,28 @@ void RimeEngine::updateStatusArea(RimeSessionId session) {
         });
 }
 
+std::vector<InputMethodEntry> RimeEngine::listInputMethods() {
+    std::vector<InputMethodEntry> result;
+    RimeSchemaList list;
+    list.size = 0;
+    // FIXME: this assumes it's already deployed!
+    api_->get_schema_list(&list);
+    for (size_t i = 0; i < list.size; i++) {
+        auto schema = list.list[i];
+        auto uniqueName = stringutils::concat("rime-schema-", schema.schema_id);
+        auto name = schema.name;
+        // TODO: It would be nice if we can report the language of schemas
+        // correctly
+        auto language = "zh";
+        result.push_back(
+            std::move(InputMethodEntry(uniqueName, name, language, "rime")
+                          .setIcon("fcitx-rime")
+                          .setLabel("ㄓ")
+                          .setConfigurable(true)));
+    }
+    return result;
+}
+
 void RimeEngine::activate(const InputMethodEntry & /*entry*/,
                           InputContextEvent &event) {
     auto *ic = event.inputContext();
