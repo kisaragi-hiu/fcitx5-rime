@@ -433,11 +433,14 @@ std::vector<InputMethodEntry> RimeEngine::listInputMethods() {
     return result;
 }
 
-void RimeEngine::activate(const InputMethodEntry & /*entry*/,
+void RimeEngine::activate(const InputMethodEntry &entry,
                           InputContextEvent &event) {
     auto *ic = event.inputContext();
+    std::string_view prefix = "rime-schema-";
+    auto schema = entry.uniqueName().substr(prefix.size());
     refreshStatusArea(*ic);
     if (auto *state = this->state(ic)) {
+        state->selectSchema(schema);
         state->activate();
     }
 }
